@@ -7,7 +7,7 @@ const localStrategy = require("passport-local");
 
 const app = express();
 
-app.set('port',process.env.PORT || 8080);
+app.set('port',process.env.PORT || 8050);
 
 let fakeUser = {
     username: 'test@test.com',
@@ -26,4 +26,14 @@ app.use(session({
         httpOnly:true,
         secure: false
     }
-}))
+}));
+
+app.get("/",(req,res) => {
+    return res.sendFile(process.cwd() + "/index.html");
+})
+
+
+app.listen(app.get('port'),() => {
+    console.log(`http://localhost:${process.env.PORT || 8050}`);
+})
+
