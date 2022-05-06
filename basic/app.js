@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -8,6 +9,8 @@ const LocalStrategy = require("passport-local");
 const app = express();
 
 app.set("port", process.env.PORT || 8050);
+app.set("views", __dirname + '/views');
+app.set('view engine','ejs');
 
 let fakeUser = {
   username: "test@test.com",
@@ -59,7 +62,32 @@ passport.use(
   })
 );
 
-app.get("/", (req, res) => {
+
+app.get("/",(req,res) => {
+  return res.render('index', {
+    "People" : 
+    [
+      {
+        "name":"Gildong",
+        "age" : "15"
+      },
+      {
+        "name" : "Jinsu",
+        "age": "27"
+      },
+      {
+        "name": "Hyena",
+        "age": "25"
+      }
+    ],
+    title:"Express"
+  }) 
+});
+
+
+
+
+app.get("/passport", (req, res) => {
   //return res.sendFile(process.cwd() + "/index.html");
   if (!req.user) {
     //아직 로그인 하지 않았을때
